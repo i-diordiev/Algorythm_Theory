@@ -1,10 +1,10 @@
 import collections
-from pylab import figure, show
+from pylab import figure, show, savefig
 from math import log
 
 
 def plot_data(data, logarithmic=False, oneplot=False):
-    fig = figure(1)
+    fig = figure(1, figsize=(6, 18))
     num = len(data)
     colors = ['r', 'b', 'g']
     markers = ['s', 'o', 'x']
@@ -66,4 +66,6 @@ def plot_data(data, logarithmic=False, oneplot=False):
             ax.set_xlim((0, x_max * 1.1))
             ax.set_ylim((0, y_max * 1.1))
             ax.legend(loc=4)
+    savefig("result")
     show()
+
