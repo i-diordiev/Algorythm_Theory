@@ -1,41 +1,45 @@
 def Partition(array, left, right):
-    pivot = array[right]
+    pivot = array[right]  # pivot - last element of subarray
     global comparisons1
-    i = left - 1
+    i = left - 1  # position of pivot after sorting
     for j in range(left, right):
         comparisons1 += 1
-        if array[j] < pivot:
-            i = i + 1
+        if array[j] < pivot:  # if element < pivot - moving it before pivot
+            i = i + 1  # moving pivot to the right
             array[i], array[j] = array[j], array[i]
-    array[i + 1], array[right] = array[right], array[i + 1]
+    array[i + 1], array[right] = array[right], array[i + 1]  # moving pivot on its position
     return i + 1
 
 
 def PartitionThreeMedian(array, left, right):
+    '''
+    choosing an average element of A[left], A[right], A[mid]
+    and moving it to the right position
+    '''
     low, mid, high = left, (left + right) // 2, right
     if array[low] <= array[mid] <= array[high] or array[high] <= array[mid] <= array[low]:
         array[mid], array[right] = array[right], array[mid]
     elif array[mid] <= array[low] <= array[high] or array[high] <= array[low] <= array[mid]:
         array[low], array[right] = array[right], array[low]
-    pivot = array[right]
+    pivot = array[right]  # pivot - last element of subarray
     global comparisons2
-    i = left - 1
+    i = left - 1  # position of pivot after sorting
     for j in range(left, right):
         comparisons2 += 1
-        if array[j] < pivot:
-            i = i + 1
+        if array[j] < pivot:  # if element < pivot - moving it before pivot
+            i = i + 1  # moving pivot to the right
             array[i], array[j] = array[j], array[i]
-    array[i + 1], array[right] = array[right], array[i + 1]
+    array[i + 1], array[right] = array[right], array[i + 1]  # moving pivot on its position
     return i + 1
 
 
 def PartitionThreePivot(array, left, right):
     global comparisons3
-    a, b = left + 2, left + 2
+    a, b = left + 2, left + 2  # a, b, d - indexes of first, second and third pivot
     c, d = right - 1, right - 1
 
-    temp_array = [array[left], array[left + 1], array[right]]
-    for i in range(1, 3):
+    temp_array = [array[left], array[left + 1], array[right]]  # array with 3 values of pivots
+    for i in range(1, 3):                                      # sorting it, because q1 < q2 < q3 needed
         key = temp_array[i]
         j = i - 1
         while j >= 0 and key < temp_array[j]:
@@ -43,7 +47,7 @@ def PartitionThreePivot(array, left, right):
             j -= 1
     array[left], array[left + 1], array[right] = temp_array[0], temp_array[1], temp_array[2]
 
-    p, q, r = array[left], array[left + 1], array[right]
+    p, q, r = array[left], array[left + 1], array[right]  # 3 pivots
     while b <= c:
         while array[b] < q and b <= c:
             comparisons3 += 1
@@ -98,21 +102,21 @@ def PartitionThreePivot(array, left, right):
 
 
 def QuickSort(array, left, right):
-    if left < right:
-        q = Partition(array, left, right)
-        QuickSort(array, left, q - 1)
-        QuickSort(array, q + 1, right)
+    if left < right:  # if length of subarray 2 or more - sorting
+        q = Partition(array, left, right)  # q - position of current pivot
+        QuickSort(array, left, q - 1)  # recursively sort left part of array
+        QuickSort(array, q + 1, right)  # recursively sort right part of array
 
 
 def QuickSortThreeMedian(array, left, right):
-    if left < right:
-        if right - left > 3:
-            q = PartitionThreeMedian(array, left, right)
-            QuickSortThreeMedian(array, left, q - 1)
-            QuickSortThreeMedian(array, q + 1, right)
+    if left < right:  # if length of subarray 2 or more - sorting
+        if right - left > 3:  # if length of subarray > 3, doing quick sort, else insertion sort
+            q = PartitionThreeMedian(array, left, right)  # q - position of current pivot
+            QuickSortThreeMedian(array, left, q - 1)  # recursively sort left part of array
+            QuickSortThreeMedian(array, q + 1, right)  # recursively sort right part of array
         else:
             global comparisons2
-            for i in range(left + 1, right + 1):
+            for i in range(left + 1, right + 1):  # insertion sort
                 key = array[i]
                 j = i - 1
                 while j >= 0 and key < array[j]:
@@ -123,16 +127,16 @@ def QuickSortThreeMedian(array, left, right):
 
 
 def QuickSortThreePivot(array, left, right):
-    if left < right:
-        if right - left > 3:
-            q1, q2, q3 = PartitionThreePivot(array, left, right)
-            QuickSortThreePivot(array, left, q1 - 1)
-            QuickSortThreePivot(array, q1 + 1, q2 - 1)
-            QuickSortThreePivot(array, q2 + 1, q3 - 1)
-            QuickSortThreePivot(array, q3 + 1, right)
+    if left < right:  # if length of subarray 2 or more - sorting
+        if right - left > 3:  # if length of subarray > 3, doing quick sort, else insertion sort
+            q1, q2, q3 = PartitionThreePivot(array, left, right)  # q1, q2, q3 - 3 indexes of pivots
+            QuickSortThreePivot(array, left, q1 - 1)  # recursively sort array from left to q1
+            QuickSortThreePivot(array, q1 + 1, q2 - 1)  # recursively sort array from q1 to q2
+            QuickSortThreePivot(array, q2 + 1, q3 - 1)  # recursively sort array from q2 to q3
+            QuickSortThreePivot(array, q3 + 1, right)  # recursively sort array from q3 to right
         else:
             global comparisons3
-            for i in range(left + 1, right + 1):
+            for i in range(left + 1, right + 1):  # insertion sort
                 key = array[i]
                 j = i - 1
                 while j >= 0 and key < array[j]:

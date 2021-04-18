@@ -72,8 +72,8 @@ key_array = matrix[start_user - 1]
 for i in range(usr):  # заполняю матрицу результатов, где 1 елемент - номер пользователя, 2 елемент - кол-во инверсий
     if i != start_user - 1:
         not_sorted_array = convert_array(matrix[i], key_array)
-        sorted_array, counter = sort_and_count_inv(not_sorted_array)
-        result_matrix[i][1] = counter
+        sorted_array, comparisons2 = sort_and_count_inv(not_sorted_array)
+        result_matrix[i][1] = comparisons2
 
 for i in range(len(result_matrix)):  # сортирую матрицу результатов по возрастанию 2 елемента
     for j in range(len(result_matrix) - 1):
