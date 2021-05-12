@@ -1,4 +1,4 @@
-from chained_hash_division import *
+from chained_hash_division import *  # importing hash tables
 from chained_hash_multiplication import *
 from open_address_hash_linear import *
 from open_address_hash_quad import *
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     n, m = source[0].strip().split()
     n, m = int(n), int(m)
 
-    elementArray = []
+    elementArray = []  # writing elements to arrays
     sumArray = []
     for i in range(1, len(source)):
         element = int(source[i].strip())
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         else:
             elementArray.append(element)
 
-    print("Choose type of hash-table:\n"
+    print("Choose type of hash-table:\n"  # choosing type of table
           "1. Chained hash table with division hash function\n"
           "2. Chained hash table with multiplication hash function\n"
           "3. Open address hash table with linear hashing\n"
@@ -37,13 +37,13 @@ if __name__ == "__main__":
           "5. Open address hash table with double hashing")
     option = int(input())
 
-    Table = table_types[option](n)
+    Table = table_types[option](n)  # creating hash table and filling it
     for el in elementArray:
         Table.Insert(el)
 
     with open("is03_diordiev_02_output.txt", "w") as file:
-        file.write(str(Table.collision_counter) + "\n")
-        for summa in sumArray:
+        file.write(str(Table.collision_counter) + "\n")  # writing number of collisions
+        for summa in sumArray:  # searching for elements to get sum
             elementFound = False
             for element in elementArray:
                 response = Table.Search(summa - element)
