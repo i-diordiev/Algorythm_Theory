@@ -14,7 +14,7 @@ if __name__ == "__main__":
         }
 
     file_name = input("Type file name: ")  # reading data from file
-    with open("input_10.txt", "r") as file:
+    with open(file_name, "r") as file:
         source = file.readlines()
 
     n, m = source[0].strip().split()
