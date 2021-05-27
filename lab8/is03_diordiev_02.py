@@ -29,8 +29,8 @@ class BinarySearchTree:  # binary search tree
     pos = 0  # position in array, used in InorderRebuild
 
     def LoadTree(self, sourceArray):
-        currentParent = None  #
-        isLeft = True
+        currentParent = None  # the last inserted node
+        isLeft = True  # flag of the last element
 
         for element in sourceArray:  # iterating elements in array
             if self.root is None:  # if tree is empty, creating node and making it head
@@ -42,7 +42,7 @@ class BinarySearchTree:  # binary search tree
                     if isLeft:  # if the last element was left, this element is right
                         isLeft = False
                     else:  # if last element was right, going upwards, to parent
-                        while currentParent.parent and currentParent.parent.right == currentParent:
+                        while currentParent.parent is not None and currentParent.parent.right == currentParent:
                             currentParent = currentParent.parent
                         currentParent = currentParent.parent
                 else:
@@ -54,7 +54,7 @@ class BinarySearchTree:  # binary search tree
                         currentParent.right = newNode
                     currentParent = newNode  # setting new node as parent for next node
                     isLeft = True  # setting flag for next node
-                if not currentParent:
+                if currentParent is None:
                     break
 
     def InorderAddValuesToArray(self, array, x):  # function that writes values of tree in array
@@ -81,12 +81,15 @@ class BinarySearchTree:  # binary search tree
     def InorderGetSequence(self, tempArray, summa, x):  # function that get array of nodes that contains sum
         if x is not None:
             tempArray.append(x)  # adding node to current list
+
             self.InorderGetSequence(tempArray, summa, x.left)  # adding left element to current list and check
             if GetSum(tempArray) == summa:  # if sum of values of current nodes == summa, end
                 return
+
             self.InorderGetSequence(tempArray, summa, x.right)  # adding right element to current list and check
             if GetSum(tempArray) == summa:  # if sum of values of current nodes == summa, end
                 return
+
             tempArray.pop()  # deleting last element of current list
 
     def InorderFindSums(self, answers, summa, x):  # function that gets arrays of nodes that contains sum
